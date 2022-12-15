@@ -104,6 +104,15 @@ const CustomerDetail = () => {
                       <a href={customerInfo.map}> {customerInfo.map}</a>
                     </span>
                   </li>
+                  <li className="mb-3">
+                    <span className="heading capitalize text-sm font-semibold text-[#292d32]">
+                      Ghi chú
+                    </span>
+                    <span className="char--special mx-1">:</span>
+                    <span className="txt capitalize leading-7">
+                      <a href={customerInfo.note}> {customerInfo.note}</a>
+                    </span>
+                  </li>
                 </ul>
               </div>
               <div className="info w-full">

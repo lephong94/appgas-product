@@ -97,6 +97,10 @@ const EditCustomerForm = ({
       <Form.Item label={labelItem("Google Map")} name="map">
         <Input type="text" />
       </Form.Item>
+
+      <Form.Item label={labelItem("Note")} name="note">
+        <Input type="text" />
+      </Form.Item>
       <Form.Item className="form-btn-groups">
         <Button
           type="primary"
