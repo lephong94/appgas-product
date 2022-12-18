@@ -16,17 +16,13 @@ const AddUserPage = ({ layout = "vertical", size = "large", customerInfo }) => {
 
   const handleFinish = (values) => {
     values = { ...values, tasks: [] };
-    USER_SERVICE.addUserInfo(values)
-      .then((res) => {
-        Notification("success", "Add new user ok", "Please wait a minute");
-        setTimeout(() => {
-          navigate("/");
-          dispatch(userActions.setUserProfile(values));
-        }, 1200);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
+    USER_SERVICE.addUserInfo(values).then((res) => {
+      Notification("success", "Add new user ok", "Please wait a minute");
+      setTimeout(() => {
+        navigate("/");
+        dispatch(userActions.setUserProfile(values));
+      }, 1200);
+    });
   };
 
   const labelItem = (labelText) => (

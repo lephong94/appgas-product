@@ -1,8 +1,5 @@
 import { Table } from "antd";
-import React, { useState } from "react";
-import { SlEye } from "react-icons/sl";
-import { useNavigate } from "react-router-dom";
-import OrderDetail from "./OrderDetail";
+import React from "react";
 const CustomerOrderHistory = ({ orderHistory }) => {
   const columns = [
     {

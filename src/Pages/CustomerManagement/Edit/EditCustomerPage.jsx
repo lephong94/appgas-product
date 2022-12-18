@@ -1,14 +1,15 @@
 import { Avatar } from "antd";
 import React, { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import EditCustomerForm from "../../../core/Components/Forms/EditCustomerForm";
 import SectionWrapper from "../../../core/Components/SectionWrapper/SectionWrapper";
 
 import CUSTOMER_SERVICE from "../../../core/services/customerServ";
 import Header from "../../../core/Components/Header/Header";
+
 import { isValidUrl } from "../../../core/utils/utils";
-import avatar from "../../../core/assets/images/avatar.svg";
+import avatar from "../../../core/assets/images/avatar_2.svg";
+
 const EditCustomerPage = () => {
   const { id } = useParams();
 

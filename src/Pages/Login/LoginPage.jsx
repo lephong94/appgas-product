@@ -1,4 +1,4 @@
-import { message, Space } from "antd";
+import { Space } from "antd";
 import React, { useEffect } from "react";
 import Container from "../../core/Components/Container/Container";
 import PageWrapper from "../../core/Components/PageWrapper/PageWrapper";
@@ -14,7 +14,8 @@ import { LOCAL_SERVICE } from "../../core/services/localServ";
 
 import { AiOutlineGoogle } from "react-icons/ai";
 import { FaFacebookF, FaTwitter } from "react-icons/fa";
-import { checkAllInfo, checkLogin } from "../../core/utils/checkLogin";
+
+import { checkAllInfo } from "../../core/utils/checkLogin";
 
 const LoginPage = () => {
   const navigate = useNavigate();

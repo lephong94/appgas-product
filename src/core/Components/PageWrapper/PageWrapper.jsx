@@ -5,6 +5,7 @@ const PageWrapper = ({ className, children }) => {
   let location = useLocation;
   const renderPage = () => {
     if (location.pathname === "/login") {
+      console.log("render login page");
     }
     return <div className={className}>{children}</div>;
   };

@@ -6,6 +6,7 @@ import SectionWrapper from "../../../core/Components/SectionWrapper/SectionWrapp
 import Header from "../../../core/Components/Header/Header";
 import USER_SERVICE from "../../../core/services/userServ";
 import EditUserForm from "../../../core/Components/Forms/EditUserForm";
+
 import avatar from "../../../core/assets/images/avatar.svg";
 
 const EditUserPage = () => {

@@ -3,14 +3,12 @@ import CustomerManageTable from "./CustomerManageTable";
 import SectionWrapper from "../../core/Components/SectionWrapper/SectionWrapper";
 import Header from "../../core/Components/Header/Header";
 import CUSTOMER_SERVICE from "../../core/services/customerServ";
-import { LOCAL_SERVICE } from "../../core/services/localServ";
 const CustomerManagementPage = () => {
   const [search, setSearch] = useState("");
-
   let handleSearchInput = (searchTxt) => {
     setSearch(searchTxt);
   };
-  const [customerList, setCustomerList] = useState(null);
+  const [customerList, setCustomerList] = useState([]);
   useEffect(() => {
     CUSTOMER_SERVICE.getCustomerList()
       .then((res) => {
@@ -21,7 +19,7 @@ const CustomerManagementPage = () => {
       });
   }, []);
 
-  if (customerList) {
+  if (customerList.length) {
     return (
       <>
         <Header handleSearchInput={handleSearchInput} />

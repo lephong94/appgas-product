@@ -16,7 +16,13 @@ const CustomerActionButtons = ({ customerData }) => {
   const { confirm } = Modal;
   const navigate = useNavigate();
   const [open, setOpen] = useState(false);
-  const showDeleteConfirm = (title, content = "", handleOK) => {
+  const showDeleteConfirm = (
+    title,
+    content = "",
+    handleOK,
+    onCancel,
+    customerData
+  ) => {
     confirm({
       title: title,
       content: content,

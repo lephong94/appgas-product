@@ -47,6 +47,7 @@ function Header({ handleSearchInput }) {
     if (LOCAL_SERVICE.user.getRole() === "master") {
       name = LOCAL_SERVICE.user.get().fullname;
     }
+
     return <p className="username mb-0">{name}</p>;
   };
 
