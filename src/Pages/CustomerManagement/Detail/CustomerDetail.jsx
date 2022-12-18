@@ -106,15 +106,6 @@ const CustomerDetail = () => {
                     <span className="char--special mx-1">:</span>
                     <span className="txt capitalize">{customerInfo.sdt}</span>
                   </li>
-                  <li className="mb-3">
-                    <span className="heading capitalize text-sm font-semibold text-[#292d32]">
-                      others link
-                    </span>
-                    <span className="char--special mx-1">:</span>
-                    <span className="txt capitalize">
-                      twitter, facebook, LinkedIn etc...
-                    </span>
-                  </li>
                 </ul>
               </div>
             </Space>
