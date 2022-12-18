@@ -5,7 +5,6 @@ import { useNavigate } from "react-router-dom";
 import Label from "../../../../src/core/Components/Forms/Label/Label";
 import CUSTOMER_SERVICE from "../../../core/services/customerServ";
 import Notification from "./../../../core/Components/Notification/Notification";
-import { userActions } from "./../../../core/redux/slice/userSlice";
 import Header from "../../../core/Components/Header/Header";
 import TextArea from "antd/es/input/TextArea";
 
@@ -14,7 +13,6 @@ const AddCustomerPage = ({
   size = "large",
   customerInfo,
 }) => {
-  const dispatch = useDispatch();
   const navigate = useNavigate();
   const [form] = Form.useForm();
   const initialValues = { ...customerInfo };

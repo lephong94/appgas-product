@@ -28,45 +28,11 @@ const CustomerDetail = () => {
   }, []);
 
   const bgClass = "bg-white rounded-lg p-4 shadow-lg p-[50px]";
-  const renderOrderHistory = (orderHistory) => {
-    return (
-      <div className="order-history">
-        <Space className="flex" direction="vertical" size={"middle"}>
-          <div className="title capitalize text-lg text-[#292d32] font-bold">
-            order history
-          </div>
-          <div className="info w-full">
-            <ul className="mb-0">
-              <li className="mb-3">
-                <span className="heading capitalize text-sm font-semibold text-[#292d32]">
-                  Mã đơn hàng
-                </span>
-                <span className="char--special mx-1">:</span>
-                <span className="txt capitalize">{customerInfo.fullname}</span>
-              </li>
-              <li className="mb-3">
-                <span className="heading capitalize text-sm font-semibold text-[#292d32]">
-                  Địa Chỉ
-                </span>
-                <span className="char--special mx-1">:</span>
-                <span className="txt capitalize">{customerInfo.address}</span>
-              </li>
-              <li className="mb-3">
-                <span className="heading capitalize text-sm font-semibold text-[#292d32]">
-                  Google Map
-                </span>
-                <span className="char--special mx-1">:</span>
-                <span className="txt capitalize leading-7">
-                  <a href={customerInfo.map}> {customerInfo.map}</a>
-                </span>
-              </li>
-            </ul>
-          </div>
-        </Space>
-      </div>
-    );
-  };
+
   const renderPersonalInfo = (customerInfo) => {
+    let mapCoordinate = customerInfo.map.split(",");
+    let latitude = mapCoordinate[0].trim();
+    let longtitude = mapCoordinate[1].trim();
     return (
       <div className={clsx("content-body", bgClass, "w-full")}>
         <div className="wrapper flex flex-col gap-2">
@@ -100,8 +66,12 @@ const CustomerDetail = () => {
                       Google Map
                     </span>
                     <span className="char--special mx-1">:</span>
-                    <span className="txt capitalize leading-7">
-                      <a href={customerInfo.map}> {customerInfo.map}</a>
+                    <span className="txt leading-7">
+                      <a
+                        href={`https://www.google.pt/maps/dir//${latitude},${longtitude}/@${latitude},${longtitude},20z`}
+                      >
+                        {`https://www.google.pt/maps/dir//${latitude},${longtitude}/@${latitude},${longtitude},20z`}
+                      </a>
                     </span>
                   </li>
                   <li className="mb-3">

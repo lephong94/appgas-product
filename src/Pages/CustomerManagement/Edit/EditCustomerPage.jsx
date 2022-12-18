@@ -7,12 +7,12 @@ import SectionWrapper from "../../../core/Components/SectionWrapper/SectionWrapp
 
 import CUSTOMER_SERVICE from "../../../core/services/customerServ";
 import Header from "../../../core/Components/Header/Header";
-
+import { isValidUrl } from "../../../core/utils/utils";
+import avatar from "../../../core/assets/images/avatar.svg";
 const EditCustomerPage = () => {
   const { id } = useParams();
 
   let [customerInfo, setCustomerInfo] = useState({});
-  const dispatch = useDispatch();
   useEffect(() => {
     CUSTOMER_SERVICE.getCustomerInfo(id)
       .then((res) => {
@@ -27,7 +27,10 @@ const EditCustomerPage = () => {
     const avatarDiv = (
       <div className="col p-[20px] flex justify-center items-center w-full">
         <div className="avatar">
-          <Avatar size={300} src={customerInfo?.avatar} />
+          <Avatar
+            size={300}
+            src={isValidUrl(customerInfo.avatar) ? customerInfo.avatar : avatar}
+          />
         </div>
       </div>
     );

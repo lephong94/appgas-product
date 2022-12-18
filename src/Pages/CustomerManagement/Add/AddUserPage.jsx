@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { Button, Form, Input } from "antd";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
@@ -16,13 +16,17 @@ const AddUserPage = ({ layout = "vertical", size = "large", customerInfo }) => {
 
   const handleFinish = (values) => {
     values = { ...values, tasks: [] };
-    USER_SERVICE.addUserInfo(values).then((res) => {
-      Notification("success", "Add new user ok", "Please wait a minute");
-      setTimeout(() => {
-        navigate("/");
-        dispatch(userActions.setUserProfile(values));
-      }, 1200);
-    });
+    USER_SERVICE.addUserInfo(values)
+      .then((res) => {
+        Notification("success", "Add new user ok", "Please wait a minute");
+        setTimeout(() => {
+          navigate("/");
+          dispatch(userActions.setUserProfile(values));
+        }, 1200);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
   };
 
   const labelItem = (labelText) => (
