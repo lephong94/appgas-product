@@ -102,7 +102,7 @@ const EditUserForm = ({ layout = "vertical", size = "large", userInfo }) => {
           htmlType="button"
           className="btn-cancel bg-[#dc3545] hover:bg-[#bb2d3b] text-white text-sm transition-all duration-[400ms] ml-3 rounded-md outline-none border-none"
           onClick={() => {
-            navigate("/");
+            navigate("/admin/user-management");
           }}
         >
           Cancel

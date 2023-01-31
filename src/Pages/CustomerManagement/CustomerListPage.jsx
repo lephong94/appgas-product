@@ -57,6 +57,7 @@ const CustomerListPage = () => {
     const fileRef = ref(storage, `files/${fileName}_${currentDate}.xlsx`);
     uploadBytes(fileRef, fileBlobData)
       .then(() => {
+        Notification("info", "Exporting data", "Please wait a minute");
         return getDownloadURL(fileRef);
       })
       .then((url) => {
