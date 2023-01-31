@@ -3,19 +3,21 @@ import React from "react";
 import { useNavigate } from "react-router-dom";
 import Label from "../../Components/Forms/Label/Label";
 
-import USER_SERVICE from "../../services/userServ";
+import USER_SERVICE_FIREBASE from "../../services/userServ.firebase";
 import Notification from "../Notification/Notification";
 
 const EditUserForm = ({ layout = "vertical", size = "large", userInfo }) => {
   const navigate = useNavigate();
   const [form] = Form.useForm();
   const initialValues = { ...userInfo };
+  console.log("userinfo");
+  console.log(userInfo);
   const handleFinish = (values) => {
-    USER_SERVICE.updateUser(userInfo.id, {
+    USER_SERVICE_FIREBASE.updateUser(userInfo.id, {
       ...userInfo,
       ...values,
     })
-      .then((res) => {
+      .then(() => {
         Notification("success", "Update customer ok", "Please wait a minute");
         setTimeout(() => {
           navigate("/");
@@ -41,7 +43,7 @@ const EditUserForm = ({ layout = "vertical", size = "large", userInfo }) => {
       initialValues={initialValues}
       onFinish={handleFinish}
       onFinishFailed={handleFinishFailed}
-      className="edit-user-form"
+      className="edit-user-form px-4"
     >
       <Form.Item
         label={labelItem("User name")}
@@ -88,17 +90,17 @@ const EditUserForm = ({ layout = "vertical", size = "large", userInfo }) => {
       >
         <Input />
       </Form.Item>
-      <Form.Item className="form-btn-groups">
+      <Form.Item className="form-btn-groups mt-7">
         <Button
           type="primary"
           htmlType="submit"
-          className="btn-update bg-[#0d6efd] hover:bg-[#0b5ed7] text-white rounded-[4px] font-semibold text-sm transition-all duration-[400ms]"
+          className="btn-update bg-[#0d6efd] hover:bg-[#0b5ed7] text-white font-semibold text-sm transition-all duration-[400ms] rounded-md outline-none border-none"
         >
           Update
         </Button>
         <Button
           htmlType="button"
-          className="btn-cancel bg-[#dc3545] hover:bg-[#bb2d3b] rounded-[4px] text-white text-sm transition-all duration-[400ms] ml-3"
+          className="btn-cancel bg-[#dc3545] hover:bg-[#bb2d3b] text-white text-sm transition-all duration-[400ms] ml-3 rounded-md outline-none border-none"
           onClick={() => {
             navigate("/");
           }}

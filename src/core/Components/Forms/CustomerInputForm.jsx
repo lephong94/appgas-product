@@ -3,10 +3,11 @@ import TextArea from "antd/es/input/TextArea";
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import Label from "../../Components/Forms/Label/Label";
-import CUSTOMER_SERVICE from "../../services/customerServ";
-import USER_SERVICE from "../../services/userServ";
 import Notification from "../Notification/Notification";
 import { nanoid } from "@reduxjs/toolkit";
+import CUSTOMER_SERVICE_FIREBASE from "../../services/customerServ.firebase";
+import USER_SERVICE_FIREBASE from "../../services/userServ.firebase";
+import ADMIN_SERVICE_FIREBASE from "../../services/adminServ.firebase";
 
 const CustomerInputForm = ({
   layout = "vertical",
@@ -16,15 +17,23 @@ const CustomerInputForm = ({
   const navigate = useNavigate();
   const [form] = Form.useForm();
   const [customerList, setCustomerList] = useState([]);
-
   useEffect(() => {
-    CUSTOMER_SERVICE.getCustomerList()
-      .then((res) => {
-        let returnedData = res.map((item, idx) => ({
-          key: idx,
-          ...item,
-        }));
-        setCustomerList(returnedData);
+    let returnedData = [];
+    CUSTOMER_SERVICE_FIREBASE.getCustomerList()
+      .then((snapshot) => {
+        if (snapshot.exists()) {
+          snapshot.forEach((item) => {
+            returnedData = [
+              ...returnedData,
+              {
+                key: item.key,
+                ...item.val(),
+                id: item.key,
+              },
+            ];
+          });
+          setCustomerList(returnedData);
+        }
       })
       .catch((error) => {
         console.log(error);
@@ -48,11 +57,47 @@ const CustomerInputForm = ({
         note: values.note,
         completed: false,
       };
-      USER_SERVICE.updateUser(userInfo.id, {
-        ...userInfo,
-        tasks: [...userInfo.tasks, taskData],
-      })
-        .then((res) => {
+
+      userInfo.tasks = [...userInfo.tasks, taskData];
+      let { id, ...userData } = userInfo;
+      console.log(
+        "🚀 ~ file: CustomerInputForm.jsx:63 ~ handleFinish ~ userInfo",
+        userInfo
+      );
+      // USER_SERVICE_FIREBASE.updateUser(id, { ...userData })
+      //   .then(() => {
+      //     let messageData = {
+      //       to: userData.token,
+      //       notification: {
+      //         title: "Task assigned",
+      //         body: "You have a task assigned",
+      //       },
+      //     };
+      //     let returnedData = ADMIN_SERVICE_FIREBASE.sendMessage(
+      //       messageData
+      //     ).then((res) => {
+      //       return res;
+      //     });
+
+      //     return returnedData;
+      //   })
+      //   .then((res) => {
+      //     console.log("res after send mess via API");
+      //     console.log(res);
+      //     Notification(
+      //       "success",
+      //       "Assign task for user ok",
+      //       "Please wait a minute"
+      //     );
+      //     setTimeout(() => {
+      //       navigate("/admin/user/task-management");
+      //     }, 1000);
+      //   })
+      //   .catch((error) => {
+      //     console.log(error);
+      //   });
+      USER_SERVICE_FIREBASE.updateUser(id, { ...userData })
+        .then(() => {
           Notification(
             "success",
             "Assign task for user ok",
@@ -86,7 +131,7 @@ const CustomerInputForm = ({
       size={size}
       onFinish={handleFinish}
       onFinishFailed={handleFinishFailed}
-      className="order-customer-form"
+      className="order-customer-form px-4"
     >
       <Form.Item
         label={labelItem("Phone number")}
@@ -111,13 +156,13 @@ const CustomerInputForm = ({
         <Button
           type="primary"
           htmlType="submit"
-          className="btn-update bg-[#0d6efd] hover:bg-[#0b5ed7] text-white rounded-[4px] font-semibold text-sm transition-all duration-[400ms]"
+          className="btn-update bg-[#0d6efd] hover:bg-[#0b5ed7] text-white font-semibold text-sm transition-all duration-[400ms] rounded-md outline-none border-none"
         >
           Assign
         </Button>
         <Button
           htmlType="button"
-          className="btn-cancel bg-[#dc3545] hover:bg-[#bb2d3b] rounded-[4px] text-white text-sm transition-all duration-[400ms] ml-3"
+          className="btn-cancel bg-[#dc3545] hover:bg-[#bb2d3b] text-white text-sm transition-all duration-[400ms] ml-3 rounded-md outline-none border-none"
           onClick={() => {
             navigate("/");
           }}

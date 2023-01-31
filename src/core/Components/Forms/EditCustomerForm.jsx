@@ -4,7 +4,7 @@ import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import Label from "../../Components/Forms/Label/Label";
 import { userActions } from "../../redux/slice/userSlice";
-import CUSTOMER_SERVICE from "../../services/customerServ";
+import CUSTOMER_SERVICE_FIREBASE from "../../services/customerServ.firebase";
 import Notification from "../Notification/Notification";
 
 const EditCustomerForm = ({
@@ -17,14 +17,15 @@ const EditCustomerForm = ({
   const [form] = Form.useForm();
   const initialValues = { ...customerInfo };
   const handleFinish = (values) => {
-    CUSTOMER_SERVICE.updateCustomer(customerInfo.id, {
-      ...customerInfo,
+    let { id, ...customerData } = customerInfo;
+    CUSTOMER_SERVICE_FIREBASE.updateCustomer(customerInfo.id, {
+      ...customerData,
       ...values,
     })
       .then((res) => {
         Notification("success", "Update customer ok", "Please wait a minute");
         setTimeout(() => {
-          navigate("/");
+          navigate("/manager");
           dispatch(userActions.setUserProfile(values));
         }, 2500);
       })
@@ -42,12 +43,12 @@ const EditCustomerForm = ({
   let latitude = "";
   let longtitude = "";
   let mapUrl = "";
-  if (mapCoordinate.length) {
+  if (mapCoordinate.length === 2) {
     latitude = mapCoordinate[0].trim();
     longtitude = mapCoordinate[1].trim();
     mapUrl = `https://www.google.pt/maps/dir//${latitude},${longtitude}/@${latitude},${longtitude},20z`;
   }
-  initialValues.map = mapUrl;
+
   return (
     <Form
       form={form}
@@ -57,7 +58,7 @@ const EditCustomerForm = ({
       initialValues={initialValues}
       onFinish={handleFinish}
       onFinishFailed={handleFinishFailed}
-      className="edit-customer-form"
+      className="edit-customer-form px-4"
     >
       <Form.Item
         label={labelItem("full name")}
@@ -109,10 +110,7 @@ const EditCustomerForm = ({
         </Form.Item>
 
         <div className="action">
-          <a
-            href={`https://www.google.pt/maps/dir//${latitude},${longtitude}/@${latitude},${longtitude},20z`}
-            target="_blank"
-          >
+          <a href={mapUrl ? mapUrl : "#"} target="_blank">
             <img
               src="https://templates.envytheme.com/joxi/default/assets/images/icon/maximize.svg"
               alt="map"
@@ -125,19 +123,19 @@ const EditCustomerForm = ({
         <Input type="text" />
       </Form.Item>
 
-      <Form.Item className="form-btn-groups">
+      <Form.Item className="form-btn-groups mt-7">
         <Button
           type="primary"
           htmlType="submit"
-          className="btn-update bg-[#0d6efd] hover:bg-[#0b5ed7] text-white rounded-[4px] font-semibold text-sm transition-all duration-[400ms]"
+          className="btn-update bg-[#0d6efd] hover:bg-[#0b5ed7] text-white font-semibold text-sm transition-all duration-[400ms] rounded-md outline-none border-none"
         >
           Update
         </Button>
         <Button
           htmlType="button"
-          className="btn-cancel bg-[#dc3545] hover:bg-[#bb2d3b] rounded-[4px] text-white text-sm transition-all duration-[400ms] ml-3"
+          className="btn-cancel bg-[#dc3545] hover:bg-[#bb2d3b] text-white text-sm transition-all duration-[400ms] ml-3 rounded-md outline-none border-none"
           onClick={() => {
-            navigate("/");
+            navigate("/manager");
           }}
         >
           Cancel

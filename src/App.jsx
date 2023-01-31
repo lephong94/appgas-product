@@ -51,7 +51,7 @@ function App() {
             />
             <Route path="customer/view/:id" element={<CustomerDetail />} />
             <Route path="customer/edit/:id" element={<EditCustomerPage />} />
-            <Route path="customer/addcustomer" element={<AddCustomerPage />} />
+            <Route path="customer/add-customer" element={<AddCustomerPage />} />
 
             <Route
               path="customer/view/:customer_id/order-history/:id"

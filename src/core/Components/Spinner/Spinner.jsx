@@ -3,7 +3,7 @@ import React from "react";
 import { useSelector } from "react-redux";
 
 /* import packages */
-import { ClimbingBoxLoader, MoonLoader } from "react-spinners";
+import { MoonLoader } from "react-spinners";
 
 export default function Spinner() {
   let isLoading = useSelector((state) => state.spinnerReducer.isLoading);

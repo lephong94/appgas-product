@@ -3,6 +3,7 @@ import React from "react";
 import Container from "../Container/Container";
 
 const SectionWrapper = ({
+  containerClass,
   sectionClass,
   subTitle,
   subTitleClass,
@@ -15,13 +16,13 @@ const SectionWrapper = ({
   return (
     <section
       className={clsx(
-        " overflow-auto max-h-[calc(100vh-90px-104px-10px)]",
+        "overflow-auto max-h-[calc(100vh-90px-104px-10px)]",
         sectionClass
       )}
     >
-      <Container>
+      <Container className={containerClass}>
         {title && (
-          <div className={clsx("section-title", "mb-4", sectionTitleClass)}>
+          <div className={clsx("section-title", "mb-5", sectionTitleClass)}>
             <h3
               className={clsx(
                 "title",

@@ -1,9 +1,10 @@
 import { Table } from "antd";
 import React from "react";
-const CustomerOrderHistory = ({ orderHistory }) => {
+const CustomerOrderHistory = ({ customerInfo }) => {
+  let orderHistory = customerInfo.order_history;
   const columns = [
     {
-      title: "order",
+      title: "Order",
       dataIndex: "order",
     },
 
@@ -12,6 +13,18 @@ const CustomerOrderHistory = ({ orderHistory }) => {
       dataIndex: "complete_date",
     },
   ];
+  const expendRowHTML = (order) => (
+    <div className="order-more-info">
+      <div className="order-info flex items-center gap-2">
+        <div className="title font-medium text-lg capitalize">Order info</div>
+        <div className="txt">: {order.order}</div>
+      </div>
+      <div className="note flex items-center gap-2">
+        <div className="title font-medium text-lg capitalize">Note :</div>
+        <div className="txt">{order.note}</div>
+      </div>
+    </div>
+  );
 
   return (
     <Table
@@ -21,20 +34,7 @@ const CustomerOrderHistory = ({ orderHistory }) => {
       rowKey={(order) => order.order_id.toString()}
       expandable={{
         expandRowByClick: true,
-        expandedRowRender: (order) => (
-          <div className="order-more-info">
-            <div className="order-info flex items-center gap-2">
-              <div className="title font-medium text-lg capitalize">
-                Order info
-              </div>
-              <div className="txt">: {order.order}</div>
-            </div>
-            <div className="note flex items-center gap-2">
-              <div className="title font-medium text-lg capitalize">Note :</div>
-              <div className="txt">{order.note}</div>
-            </div>
-          </div>
-        ),
+        expandedRowRender: (order) => expendRowHTML(order),
       }}
     />
   );

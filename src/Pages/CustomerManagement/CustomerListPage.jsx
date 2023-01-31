@@ -7,14 +7,14 @@ import { useNavigate } from "react-router-dom";
 import { MdOutlineManageAccounts } from "react-icons/md";
 import { RiFileExcel2Line } from "react-icons/ri";
 import { LOCAL_SERVICE } from "../../core/services/localServ";
-import CUSTOMER_SERVICE from "../../core/services/customerServ";
 
-import { storage } from "../../core/Components/UploadFile/firebase";
+import { storage } from "../../core/services/configFirebase";
 import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
 
 import { exportToExcel } from "../../core/Components/ExcelReport/exportExcel";
 import { sendMailWithFile } from "../../core/Components/Email/sendMail";
 import Notification from "../../core/Components/Notification/Notification";
+import CUSTOMER_SERVICE_FIREBASE from "../../core/services/customerServ.firebase";
 
 const CustomerListPage = () => {
   const [search, setSearch] = useState("");
@@ -22,9 +22,21 @@ const CustomerListPage = () => {
   const [customerList, setCustomerList] = useState([]);
 
   useEffect(() => {
-    CUSTOMER_SERVICE.getCustomerList()
-      .then((res) => {
-        setCustomerList(res);
+    let returnedData = [];
+    CUSTOMER_SERVICE_FIREBASE.getCustomerList()
+      .then((snapshot) => {
+        if (snapshot.exists()) {
+          snapshot.forEach((item) => {
+            returnedData = [
+              ...returnedData,
+              {
+                ...item.val(),
+                id: item.key,
+              },
+            ];
+          });
+          setCustomerList(returnedData);
+        }
       })
       .catch((error) => {
         console.log(error);
@@ -45,7 +57,6 @@ const CustomerListPage = () => {
     const fileRef = ref(storage, `files/${fileName}_${currentDate}.xlsx`);
     uploadBytes(fileRef, fileBlobData)
       .then(() => {
-        alert("upload ok");
         return getDownloadURL(fileRef);
       })
       .then((url) => {

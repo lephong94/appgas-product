@@ -4,13 +4,13 @@ import { FiTrash } from "react-icons/fi";
 import { SlEye } from "react-icons/sl";
 
 import { Modal, Popover, Space } from "antd";
-import CUSTOMER_SERVICE from "../../core/services/customerServ";
 import { useNavigate } from "react-router-dom";
 import { LOCAL_SERVICE } from "../../core/services/localServ";
 import { DesktopView, MobileView } from "../../core/HOC/Responsive";
 
 import { TfiMore } from "react-icons/tfi";
 import { useState } from "react";
+import CUSTOMER_SERVICE_FIREBASE from "../../core/services/customerServ.firebase";
 
 const CustomerActionButtons = ({ customerData }) => {
   const { confirm } = Modal;
@@ -57,16 +57,9 @@ const CustomerActionButtons = ({ customerData }) => {
   };
 
   const deleteCustomer = (customerData) => {
-    CUSTOMER_SERVICE.deleteCustomer(customerData.id)
-      .then((res) => {
-        console.log(res);
-      })
-      .catch((error) => {
-        console.log(error);
-      })
-      .finally(() => {
-        window.location.reload();
-      });
+    CUSTOMER_SERVICE_FIREBASE.deleteCustomer(customerData.id)
+      .then(() => {})
+      .catch((error) => {});
   };
 
   const handleView = (customerData) => {
@@ -101,8 +94,7 @@ const CustomerActionButtons = ({ customerData }) => {
           size={"20px"}
           color={"#82D973"}
         />
-        {(LOCAL_SERVICE.user.getRole() === "admin" ||
-          LOCAL_SERVICE.user.getRole() === "master") && (
+        {LOCAL_SERVICE.user.getRole() !== "user" && (
           <FiTrash
             onClick={() => {
               handleDeleteCustomer(customerData);
@@ -135,8 +127,7 @@ const CustomerActionButtons = ({ customerData }) => {
           size={"20px"}
           color={"#82D973"}
         />
-        {(LOCAL_SERVICE.user.getRole() === "admin" ||
-          LOCAL_SERVICE.user.getRole() === "master") && (
+        {LOCAL_SERVICE.user.getRole() !== "user" && (
           <FiTrash
             onClick={() => {
               handleDeleteCustomer(customerData);
